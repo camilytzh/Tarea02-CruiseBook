@@ -1,4 +1,4 @@
-public abstract class Cabina {
+public abstract class Cabina implements Observer {
     protected String tipo;
     protected String estado;
 
@@ -8,4 +8,10 @@ public abstract class Cabina {
     }
 
     public abstract String obtenerDescripcion();
+
+    @Override
+    public void update(String estado) {
+        this.estado = estado;
+        System.out.println("Actualizado a estado: " + estado);
+    }
 }
