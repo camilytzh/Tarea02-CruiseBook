@@ -1,61 +1,53 @@
+import Utils.InputHelper;
+import chainOfResponsibility.Gerencia;
+import chainOfResponsibility.ServicioTecnico;
+import factoryMethod.*;
+import observer.GestorEstadoCabina;
+import observer.GestorReservas;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        GestorEstadoCabina gestorEstado = new GestorEstadoCabina();
+        GestorReservas gestorReservas = new GestorReservas();
+        ServicioTecnico servicioTecnico = new ServicioTecnico(5678, "Servicio Técnico");
+        Gerencia gerencia = new Gerencia(4321, "Gerencia del Crucero", "123-456-789");
+        Scanner scanner = new Scanner(System.in);
 
-        //Uso de Factory Method para creación de cabinas
+        servicioTecnico.setNextChain(gerencia);
 
-        System.out.println("CREACION DE CABINAS");
-        System.out.println();
+        CabinaFactoryManager factoryManager = new CabinaFactoryManager();
+        factoryManager.registerFactory("Interior", new CabinaInteriorFactory());
+        factoryManager.registerFactory("Familiar", new CabinaFamiliarFactory());
+        factoryManager.registerFactory("Balcón", new CabinaBalconFactory());
+        factoryManager.registerFactory("Suite", new SuiteFactory());
 
-        CabinaFactory suiteFactory = new SuiteFactory();
-        CabinaFactory balconFactory = new CabinaBalconFactory();
-        CabinaFactory interiorFactory = new CabinaInteriorFactory();
-        CabinaFactory familiarFactory = new CabinaFamiliarFactory();
+        boolean salir = false;
 
-        Cabina suite = suiteFactory.crearCabina("Suite", "Disponible");
-        Cabina cabinaBalcon = balconFactory.crearCabina("Cabina con Balcón", "Disponible");
-        Cabina cabinaInterior = interiorFactory.crearCabina("Cabina Interior", "Ocupada");
-        Cabina cabinaFamiliar = familiarFactory.crearCabina("Cabina Familiar", "Ocupada");
+        while (!salir) {
+            System.out.println("\nMenú principal:");
+            System.out.println("1. Gestionar Reservas");
+            System.out.println("2. Reportar Incidentes");
+            System.out.println("3. Salir");
 
-        System.out.println(suite.obtenerDescripcion());
-        System.out.println(cabinaBalcon.obtenerDescripcion());
-        System.out.println(cabinaInterior.obtenerDescripcion());
-        System.out.println(cabinaFamiliar.obtenerDescripcion());
-        System.out.println();
-
-        //Uso de Observer para gestión de las cabinas
-
-        System.out.println("GESTION DE CABINAS");
-        System.out.println();
-
-        GestorEstadoCabina gestorCabinas = new GestorEstadoCabina();
-        gestorCabinas.agregarCabina(suite);
-        gestorCabinas.agregarCabina(cabinaBalcon);
-        gestorCabinas.agregarCabina(cabinaInterior);
-
-        System.out.println("Notificando estado: 'Ocupada'");
-        gestorCabinas.notificar("Ocupada");
-
-        gestorCabinas.borrarCabina(cabinaBalcon);
-        System.out.println("Notificando estado: 'Disponible'");
-        gestorCabinas.notificar("Disponible");
-        System.out.println();
-
-        //Uso de Strategy para la gestión de restricciones
-
-        System.out.println("GESTION DE RESTRICCIONES");
-        System.out.println();
-
-        RestriccionCancelacion restriccionCancelacion = new RestriccionCancelacion();
-        RestriccionReprogramacion restriccionReprogramacion = new RestriccionReprogramacion();
-        RestriccionReembolsos restriccionReembolsos = new RestriccionReembolsos();
-
-        restriccionCancelacion.añadirRestriccion("Cancelación permitida hasta 24 horas antes del viaje.");
-        restriccionCancelacion.gestionarCancelacion();
-
-        restriccionReprogramacion.añadirRestriccion("Reprogramación gratuita hasta 48 horas antes del viaje.");
-        restriccionReprogramacion.gestionarServicioCliente();
-
-        restriccionReembolsos.añadirRestriccion("Reembolso total solo hasta 10 días antes del viaje.");
-        restriccionReembolsos.gestionarReembolsos();
+            int opcion = InputHelper.readInt("Seleccione una opción: ");
+            switch (opcion) {
+                case 1:
+                    gestorReservas.gestionarReservas(factoryManager, gestorEstado, scanner);
+                    break;
+                case 2:
+                    String descripcion = InputHelper.readLine("Describa el incidente: ");
+                    System.out.println("Incidente reportado: " + descripcion);
+                    servicioTecnico.procesarReporte();
+                    break;
+                case 3:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+        }
     }
 }
+

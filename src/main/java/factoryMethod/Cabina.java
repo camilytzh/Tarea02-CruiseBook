@@ -1,3 +1,7 @@
+package factoryMethod;
+
+import observer.Observer;
+
 public abstract class Cabina implements Observer {
     protected String tipo;
     protected String estado;

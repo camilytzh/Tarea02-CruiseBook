@@ -1,10 +1,12 @@
-public class CabinaInterior extends Cabina{
+package factoryMethod;
+
+public class CabinaInterior extends Cabina {
     public CabinaInterior(String tipo, String estado) {
         super(tipo, estado);
     }
 
     @Override
     public String obtenerDescripcion() {
-        return "Cabina interior, estado: " + estado;
+        return "factoryMethod.Cabina interior, estado: " + estado;
     }
 }

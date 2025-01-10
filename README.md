@@ -9,6 +9,6 @@ Si el viaje es cancelado o hay cambios significativos en el itinerario, el siste
 ## Patrones de diseño utilizados
 - Factory Method
 - Strategy
-- Observer
+- observer.Observer
 ## Diagrama de clases
 ![Captura de pantalla 2024-12-09 114208](https://github.com/user-attachments/assets/5b1a65e6-a390-43bb-858c-463a619e2fcc)

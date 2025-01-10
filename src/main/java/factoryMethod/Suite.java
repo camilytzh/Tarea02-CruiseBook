@@ -1,10 +1,12 @@
-public class Suite extends Cabina{
+package factoryMethod;
+
+public class Suite extends Cabina {
     public Suite(String tipo, String estado) {
         super(tipo, estado);
     }
 
     @Override
     public String obtenerDescripcion() {
-        return "Suite con estado: " + estado;
+        return "factoryMethod.Suite con estado: " + estado;
     }
 }
