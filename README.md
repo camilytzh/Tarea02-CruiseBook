@@ -8,7 +8,5 @@ Los operadores del crucero pueden establecer políticas de cancelación, reprogr
 Si el viaje es cancelado o hay cambios significativos en el itinerario, el sistema debe gestionar el reembolso de manera automática o permitir a los usuarios modificar su reserva sin cargos adicionales. Los incidentes reportados por los usuarios, tales como problemas con la reserva, pagos o servicios a bordo, son atendidos inicialmente por el equipo de atención al cliente; si no se resuelven, se escalan a la gerencia del crucero para una solución definitiva.
 ## Patrones de diseño utilizados
 - Factory Method
-- Strategy
-- observer.Observer
-## Diagrama de clases
-![Captura de pantalla 2024-12-09 114208](https://github.com/user-attachments/assets/5b1a65e6-a390-43bb-858c-463a619e2fcc)
+- Chain of Responsibility
+- Observer
